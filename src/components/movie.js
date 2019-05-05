@@ -18,11 +18,11 @@ class Movie extends Component {
         const ActorInfo = ({Actors}) => {
             return Actors.map((actor, i) =>
                 <p key={i}>
-                    <b>{actor.FirstActorname}</b> {actor.FirstCharacterName}
+                    <b>{actor.FistA}</b> {actor.FirstC}
                     <p>{}</p>
-                    <b>{actor.SecondActorname}</b> {actor.SecondCharacterName}
+                    <b>{actor.SecondA}</b> {actor.SecondC}
                     <p>{}</p>
-                    <b>{actor.ThirdActorname}</b> {actor.ThirdCharacterName}
+                    <b>{actor.ThirdA}</b> {actor.ThirdC}
                 </p>
             );
         };
