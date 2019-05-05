@@ -4,7 +4,6 @@ import { Glyphicon, Panel, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { Image } from 'react-bootstrap'
 import { withRouter } from "react-router-dom";
 import {fetchMovie} from "../actions/movieActions";
-
 //support routing by creating a new component
 
 class Movie extends Component {
@@ -15,12 +14,15 @@ class Movie extends Component {
             dispatch(fetchMovie(this.props.movieId));
     }
 
-
     render() {
-        const ActorInfo = ({actors}) => {
-            return actors.map((actor, i) =>
+        const ActorInfo = ({Actors}) => {
+            return Actors.map((actor, i) =>
                 <p key={i}>
-                    <b>{actor.actorName}</b> {actor.characterName}
+                    <b>{actor.FirstActorname}</b> {actor.FirstCharacterName}
+                    <p>{}</p>
+                    <b>{actor.SecondActorname}</b> {actor.SecondCharacterName}
+                    <p>{}</p>
+                    <b>{actor.ThirdActorname}</b> {actor.ThirdCharacterName}
                 </p>
             );
         };
@@ -28,11 +30,14 @@ class Movie extends Component {
         const ReviewInfo = ({Reviews}) => {
             return Reviews.map((review, i) =>
                 <p key={i}>
-                    <b>{review.username}</b> {review.review}
-                    <Glyphicon glyph={'star'} /> {review.rating}
+                    <b>{review.user}</b> {''}
+                    <p>{}</p>
+                    <b>{review.comment}</b>{''}
+                    <p>{}</p>
+                    <Glyphicon glyph={'star'} /> {review.rate}
                 </p>
             );
-        }
+        };
 
         const DetailInfo = ({currentMovie}) => {
             if (!currentMovie) { // evaluates to true if currentMovie is null
@@ -41,21 +46,22 @@ class Movie extends Component {
             return (
                 <Panel>
                     <Panel.Heading>Movie Detail</Panel.Heading>
-                    <Panel.Body><Image className="image" src={currentMovie.imageUrl} thumbnail /></Panel.Body>
+                    <Panel.Body><Image className="image" src={currentMovie.ImageUrl} thumbnail /></Panel.Body>
                     <ListGroup>
                         <ListGroupItem>{currentMovie.title}</ListGroupItem>
-                        <ListGroupItem><ActorInfo actors={currentMovie.actors} /></ListGroupItem>
+                        <ListGroupItem><ActorInfo Actors={currentMovie.Actors} /></ListGroupItem>
                         <ListGroupItem><h4><Glyphicon glyph={'star'} /> {currentMovie.avgRating} </h4></ListGroupItem>
                     </ListGroup>
-                    <Panel.Body><ReviewInfo reviews={currentMovie.Reviews} /></Panel.Body>
+                    <Panel.Body><ReviewInfo Reviews={currentMovie.Reviews} /></Panel.Body>
                 </Panel>
             );
         };
         return (
-            <DetailInfo currentMovie={this.props.selectedMovie} />
+            <DetailInfo currentMovie={this.props.selectedMovie}/>
         );
     }
 }
+
 
 const mapStateToProps = (state, ownProps) => {
     console.log(ownProps);
@@ -63,6 +69,6 @@ const mapStateToProps = (state, ownProps) => {
         selectedMovie: state.movie.selectedMovie,
         movieid: ownProps.match.params.movieid
     }
-}
+};
 
 export default withRouter(connect(mapStateToProps)(Movie));
